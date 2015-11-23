@@ -1,0 +1,49 @@
+
+div{
+  /*border: solid;*/
+  padding: 10px;
+}
+
+.container{
+  border: solid;
+}
+
+.form-control{
+  width: 50% !important;
+  margin-left: 10px;
+}
+
+.reset{
+  text-align: center;
+  padding: 2px;
+  margin-top: 5px;
+}
+
+.attempts{
+  display: inline-flex;
+  margin-top: 10px;
+}
+
+.score{
+  display: inline-flex;
+    margin-top: 10px;
+}
+
+.buttons{
+  display: inline-flex;
+  text-align: center !important;
+  border-top: solid;
+  border-bottom: solid;
+  /*text-align: right;*/
+}
+
+button{
+  width: 200px;
+  height: 50px;
+}
+
+/*#ninjasprite {
+    left: 100px;
+    width: 146px;
+    background: url('ninjaspriteblue.png') -196 -2;
+}*/
