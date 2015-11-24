@@ -1,87 +1,300 @@
+<!DOCTYPE HTML PUBLIC "//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ninja Gold</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.min.js"></script>
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <script>
+    var data = {
+      attempts : 20,
+      score : 0,
+      events: []
+    };
+         $(document).ready(function()
+         {
+             $('#score').attr("disabled","disabled")
+             $('#attempts').attr("disabled","disabled")
+             $("#attempts").val(data.attempts).css({"color":"Green", "font-size": "15px" , "font-weight" : "800px"});
+             $("#score").val(data.score).css({"color":"Green", "font-size": "15px" , "font-weight" : "800px"});
+             var x = 0;
+             var gold = 0;
+             var totalatt;
+             validate(totalatt, gold)
 
-<html lang="en">
-<head>
-  <title>Ninja Gold</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device, initial-scale=1">
+               $("#btnCave").click(function(){
+                   $("img").animate({left: '15%'});
+                   caveGold()
+                   x= x+1;
+                  $("#attempts").val(data.attempts-x);
+                  totalatt = data.attempts-x;
+                  validate(totalatt, gold)
 
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <script type="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <link href="css/NinjaGold.css" rel="stylesheet" type="text/css" />
-</head>
 
-<body>
-  <div class="container">
-    <div class="row content">
-      <div class="col-sm-12 top">
-        <div class="col-sm-3 reset">
-          <button type="btnReset">Reset</button>
-        </div> <!--Reset-->
+               });
+               $("#btnHouse").click(function(){
+                   $("img").animate({left: '35%'});
+                   houseGold()
+                    x= x+1;
+                   $("#attempts").val(data.attempts-x);
+                   totalatt = data.attempts-x;
+                   validate(totalatt, gold)
+               });
+               $("#btnGoldmine").click(function(){
+                   $("img").animate({left: '50%'});
+                   goldmine()
+                    x= x+1;
+                   $("#attempts").val(data.attempts-x);
+                   totalatt = data.attempts-x;
+                   validate(totalatt, gold)
+               });
+               $("#btnCasino").click(function(){
+                   $("img").animate({left: '70%'});
+                   casinoGold()
+                    x= x+1;
+                   $("#attempts").val(data.attempts-x);
+                   totalatt = data.attempts-x;
+                   validate(totalatt, gold)
 
-        <div class="col-sm-3 col-sm-offset-2 attempts">
-          <label for="txtAttempts">Attempts:  </label>
-          <input class="form-control" id="txtAttempts" type="text" placeholder="">
-        </div> <!--Attempts-->
+               });
 
-        <div class="col-sm-3 score">
-            <label for="txtScore">Score:   </label>
-            <input class="form-control" id="txtScore" type="text" placeholder="">
-        </div> <!--score-->
-      </div> <!--top-->
-    </div> <!--row content-->
+                 $(document).on("click", "#btnReset", function(){
+                 location.reload(true);
+                 });
 
-      <div class="row game">
-        <div class="col-sm-12 buttons">
-          <div class="col-sm-3 cave">
-            <button type="btnCave">Cave</button>
-          </div> <!--cave-->
+               function caveGold (){
+                 gold = gold + 5;
+                 $("#score").val(data.score+gold);
+                 var event = {
+                   location: 'Cave',
+                   time: Date(),
+                   amount: 5
+                 }
+                 data.events.push(event)
+                 var arr = [
+                   '<p style = "color : green"> Ninja went to ', event.location, ' and got ', event.amount, ' .The time was ', event.time
+                 ]
+                 $("#all").append(arr.join(''));
+                 $("#gains").append(arr.join(''))
+                 console.log(data.events)
+               }
+               function houseGold (){
+                 var random = Math.floor(Math.random()*10+1);
+                 if(random >= 9)
+                 {
+                   gold = gold + 0;
+                   $("#score").val(data.score+gold);
+                   console.log(random)
+                 }
+                 else {
+                   gold = gold + 10;
+                   $("#score").val(data.score+gold);
+                   var event = {
+                     location: 'House',
+                     time: Date(),
+                     amount: 10
+                   }
+                   data.events.push(event)
+                   var arr = [
+                     '<p style = "color : green"> Ninja went to ', event.location, ' and got ', event.amount, ' .The time was ', event.time
+                   ]
+                   $("#all").append(arr.join(''));
+                   $("#gains").append(arr.join(''));
+                   console.log(data.events)
+                 }
+               }
+               function goldmine (){
+                 var random =  Math.floor(Math.random()*10+1);
+                 var random1 = Math.floor(Math.random()*25+1);
 
-          <div class="col-sm-3 house">
-            <button type="btnHouse">House</button>
-          </div> <!--house-->
+                 var event = {
+                   location: 'Goldmine',
+                   time: Date(),
+                   amount: random1
+                 }
 
-          <div class="col-sm-3 goldmine">
-            <button type="btnGoldMine">Gold Mine</button>
-          </div> <!--goldmine-->
+                 if(random >= 9 )
+                 {
+                   gold = gold + 0;
+                   $("#score").val(data.score+gold);
+                   data.events.push(event)
+                   var arr = [
+                     '<p style = "color : black"> Ninja went to ', event.location, ' and got 0 .The time was ', event.time
+                   ]
+                   console.log(random)
+                 }
+                 else {
+                   gold = gold + random1;
+                   $("#score").val(data.score+gold);
 
-          <div class="col-sm-3 casino">
-            <button type="btnCasino">Casino</button>
-          </div> <!--casino-->
-        </div> <!--buttons-->
+                   data.events.push(event)
+                   var arr = [
+                     '<p style = "color : green"> Ninja went to ', event.location, ' and got  ', event.amount, ' .The time was ', event.time
+                   ]
+                   $("#all").append(arr.join(''));
+                   $("#gains").append(arr.join(''));
+                   console.log(data.events)
+                 }
+               }
+               function casinoGold (){
+                 var random =  Math.floor(Math.random()*10+1);
+                 var random1 = Math.floor(Math.random()*(50-20)+20);
+                 var event = {
+                   location: 'Casino',
+                   time: Date(),
+                   amount: random1
+                 }
+                 if(random >= 6)
+                 {
+                   $("#score").val(gold-random1);
 
-        <!-- <img id="ninjasprite" src="ninjaspriteblue.png">
+                   data.events.push(event)
+                   var arr = [
+                     '<p style = "color : red"> Ninja went to ', event.location, ' and lost ', event.amount, ' .The time was ', event.time
+                   ]
+                   $("#all").append(arr.join(''));
+                   $("#loss").append(arr.join(''));
+                   console.log(data.events)
+                 }
+                 else {
+                   gold = gold + random1;
+                   $("#score").val(data.score+gold);
+                   data.events.push(event)
+                   var arr = [
+                     '<p style = "color : green"> Ninja went to ', event.location, ' and got ', event.amount, ' .The time was ', event.time
+                   ]
+                   $("#all").append(arr.join(''));
+                   $("#gains").append(arr.join(''));
+                   console.log(data.events)
+                 }
+               }
+             function message () {
+                alert("0 ATTEMPTS!");
+            }
 
-        </img> -->
+            function validate (a,b){
+              if((a == 0) && (b >= 250)){
+                alert("Congratulations! You Win!");
+                $(".row2 button").attr("disabled","disabled").css("background-color", "#7a877a");
+              }
+              if(a==0){
+                alert("You Lose!");
+                $(".row2 button").attr("disabled","disabled").css("background-color", "#7a877a");
+              }
+              if(b >= 250){
+                alert("Congratulations! You Win!");
+                $(".row2 button").attr("disabled","disabled").css("background-color", "#7a877a");
+              }
 
-      </div> <!--rowgame-->
+            }
 
-      <div class="row tabs">
-        <div class="col-sm-12 logtabs">
-          <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#all">ALL</a></li>
-            <li><a data-toggle="tab" href="#gains">GAINS</a></li>
-            <li><a data-toggle="tab" href="#losses">LOSSES</a></li>
-          </ul>
+            function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
+          // To disable f5
+                /* jQuery < 1.7 */
+            $(document).bind("keydown", disableF5);
+            /* OR jQuery >= 1.7 */
+            $(document).on("keydown", disableF5);
 
-          <div class="tab-content">
-            <div id="all" class="tab-pane fade in active">
-              <h3>HOME</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-            </div>
-            <div id="gains" class="tab-pane fade">
-              <h3>Menu 1</h3>
-              <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-            </div>
-            <div id="losses" class="tab-pane fade">
-              <h3>Menu 2</h3>
-              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-            </div>
-          </div> <!--tab-content-->
-        </div> <!--logtabs-->
-      </div> <!--row tabs-->
-  </div> <!--container-->
-</body>
+            $(document).keydown(function(event) {
+            if (event.ctrlKey==true && (event.which == '61' || event.which == '107' || event.which == '173' || event.which == '109'  || event.which == '187'  || event.which == '189'  ) ) {
+                    event.preventDefault();
+                 }
+                // 107 Num Key  +
+                // 109 Num Key  -
+                // 173 Min Key  hyphen/underscor Hey
+                // 61 Plus key  +/= key
+            });
+
+            $(window).bind('mousewheel DOMMouseScroll', function (event) {
+                   if (event.ctrlKey == true) {
+                   event.preventDefault();
+                   }
+                 });
+
+         });
+
+    </script>
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="row row1">
+        <div class="col-md-6">
+          <button id = "btnReset" style="margin-top: 10px; background-color:#969696;" type="button" class="btn btn-primary btn-lg">RESET</button>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="score">SCORE:</label><input type="score" class="form-control" id="score">
+          </div>
+          <div class="form-group">
+            <label for="attempts">ATTEMPTS:</label><input type="attempts" class="form-control" id="attempts">
+          </div>
+        </div>
+
+      </div>
+      <!-- row row 1  -->
+
+      <div class="row row2">
+          <div class="col-md-3">
+            <button id = "btnCave" type="button" >CAVE</button>
+          </div>
+          <div class="col-md-3">
+            <button id = "btnHouse" type="button" >HOUSE</button>
+          </div>
+          <div class="col-md-3">
+            <button id = "btnGoldmine" type="button">GOLDMINE</button>
+          </div>
+          <div class="col-md-3">
+            <button id = "btnCasino" type="button" >CASINO</button>
+          </div>
+
+      </div>
+      <!-- <button>Start Animation</button>
+      <div class ="color" style="background:#98bf21;height:100px;width:100px;position:absolute;">hello <span><img src="images/ninja.png" alt="" /></span></div> -->
+      <!-- row row 2  -->
+      <div class="row row3">
+        <div class="ninjahere">
+            <img style=" width:100%; height: 100%" src="images/bg.png" alt="" />
+          <img style="position: absolute; left:15%; top:300px" src="images/ninjaa.png" alt="" />
+            <!-- <img id = "ninja" src='images/ninja.png' style="width : 200px; height : 200px;" alt='ninja'> -->
+        </div>
+      </div>
+      <!--ninja here  -->
+      <div class="row row4 ">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#All">ALL</a></li>
+          <li><a data-toggle="tab" href="#Gains">GAINS</a></li>
+          <li><a data-toggle="tab" href="#Loss">LOSSES</a></li>
+        </ul>
+      </div>
+      <!-- log here -->
+      <div class="tab-content">
+        <div id="All" class="tab-pane fade in active">
+          <h3>All</h3>
+          <p id ="all"></p>
+
+        </div>
+        <div id="Gains" class="tab-pane fade">
+          <h3>List of Gains</h3>
+          <p id ="gains"></p>
+        </div>
+        <div id="Loss" class="tab-pane fade">
+          <h3>List of Money you lose</h3>
+          <p id ="loss"></p>
+        </div>
+      </div>
+
+      <!-- <div id="dialog" title="Basic dialog">
+        <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+      </div> -->
+
+    </div>
+
+  </body>
 </html>
